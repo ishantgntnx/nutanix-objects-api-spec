@@ -8472,7 +8472,8 @@
       "type":"string",
       "enum":[
         "GOVERNANCE",
-        "COMPLIANCE"
+        "COMPLIANCE",
+        "NtnxWORM"
       ]
     },
     "ObjectLockRule":{
