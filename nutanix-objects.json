@@ -10772,7 +10772,8 @@
       "type":"string",
       "enum":[
         "Enabled",
-        "Disabled"
+        "Disabled",
+        "Paused"
       ]
     },
     "ReplicationRules":{
