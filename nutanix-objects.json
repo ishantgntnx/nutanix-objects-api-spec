@@ -7,9 +7,9 @@
     "globalEndpoint":"s3.amazonaws.com",
     "protocol":"rest-xml",
     "protocols":["rest-xml"],
-    "serviceAbbreviation":"Amazon S3",
-    "serviceFullName":"Amazon Simple Storage Service",
-    "serviceId":"S3",
+    "serviceAbbreviation":"Nutanix Objects",
+    "serviceFullName":"Nutanix Objects",
+    "serviceId":"nutanix-objects",
     "signatureVersion":"s3",
     "uid":"s3-2006-03-01",
     "auth":["aws.auth#sigv4"]
@@ -1534,6 +1534,88 @@
       },
       "unsignedPayload":true,
       "isNtnxSupported":false
+    },
+    "GetObjectsDefaultRegion":{
+      "name":"GetObjectsDefaultRegion",
+      "http":{
+        "method":"GET",
+        "requestUri":"/?oss-region",
+        "responseCode":200
+      },
+      "output":{"shape":"GetObjectsDefaultRegionOutput"},
+      "documentation":"<p>Fetches the Default Region, it's a non-authenticated request.</p>",
+      "authtype":"none"
+    },
+    "GetObjectsAllDomains":{
+      "name":"GetObjectsAllDomains",
+      "http":{
+        "method":"GET",
+        "requestUri":"/?oss-all-domains",
+        "responseCode":200
+      },
+      "output":{"shape":"GetObjectsAllDomainsOutput"},
+      "documentation":"<p>Fetches all domains in OSS.</p>",
+      "authtype":"none"
+    },
+    "PutBucketNfsConfiguration":{
+      "name":"PutBucketNfsConfiguartion",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/{Bucket}?nfs",
+        "responseCode":200
+      },
+      "input":{"shape":"PutBucketNfsConfigRequest"},
+      "documentation":"<p>Places a NFS Configuration on NFS enabled bucket.</p>"
+    },
+    "GetBucketNfsConfiguration":{
+      "name":"GetBucketNfsConfiguration",
+      "http":{
+        "method":"GET",
+        "requestUri":"/{Bucket}?nfs",
+        "responseCode":200
+      },
+      "input":{"shape":"GetBucketNfsConfigRequest"},
+      "output":{"shape":"GetBucketNfsConfigOutput"},
+      "documentation":"<p>Gets the NFS configuration of NFS enabled bucket.</p>"
+    },
+    "PutBucketInventoryStatus":{
+      "name":"PutBucketInventoryStatus",
+      "http":{
+        "method":"POST",
+        "requestUri":"/?inventory_state",
+        "responseCode":200
+      },
+      "input":{"shape":"PutBucketInventoryStatusRequest"},
+      "output":{"shape":"PutBucketInventoryStatusOutput"},
+      "documentation":"<p>This operation enables you to update the status of multiple inventory configurations using a single HTTP request. If you know the bucket inventory configurations that you want to update, this operation provides a suitable alternative to sending individual update requests, reducing per-request overhead.</p> <p>The request contains a list of up to 1000 inventory configuration keys that you want to update. In the XML, you provide the bucket names and respective inventory config ids. For each bucket name-inventory config id pair, Amazon S3 performs an update operation and returns the result of that update, success, or failure, in the response.</p> <p> The operation supports two modes for the response: verbose and quiet. By default, the operation uses verbose mode in which the response includes the result of deletion of each key in your request. In quiet mode the response includes only keys where the update operation encountered an error. For a successful update, the operation does not return any information about the update in the response body.</p> <p>Finally, the Content-MD5 header is required for all Multi-InventoryConfiguration Update requests. Amazon S3 uses the header value to ensure that your request body has not been altered in transit.</p>",
+      "httpChecksumRequired":true
+    },
+    "GetBucketInventoryStatus":{
+      "name":"GetBucketInventoryStatus",
+      "http":{
+        "method":"POST",
+        "requestUri":"/?get_inventory_state",
+        "responseCode": 200
+      },
+      "input":{
+        "shape":"GetBucketInventoryStatusRequest"
+       },
+      "output":{
+        "shape":"GetBucketInventoryStatusOutput"
+      },
+      "documentation":"<p>This operation enables you to read the status of multiple inventory configurations using a single HTTP request. If you know the bucket inventory configurations that you want to get the status of, this operation provides a suitable alternative to sending individual get status requests, reducing per-request overhead.</p> <p>The request contains a list of up to 1000 inventory configuration keys that you want to get the status of. In the XML, you provide the bucket names and respective inventory config ids. For each bucket name-inventory config id pair, Amazon S3 performs a get status operation and returns the result of that update, success, or failure, in the response.</p> <p>Finally, the Content-MD5 header is required for all Multi-InventoryConfiguration Get Status requests. Amazon S3 uses the header value to ensure that your request body has not been altered in transit.</p>",
+      "httpChecksumRequired":true
+    },
+    "ListFederationMembers":{
+      "name":"ListFederationMembers",
+      "http":{
+        "method":"GET",
+        "requestUri":"/?listFederationMembers",
+        "responseCode":200
+      },
+      "input":{"shape":"ListFederationMembersRequest"},
+      "output":{"shape":"ListFederationMembersResult"},
+      "documentation":"<p>Fetches the list of all members in the specified Federation.</p>"
     }
   },
   "shapes":{
@@ -2935,6 +3017,12 @@
           "documentation":"<p>A forward slash followed by the name of the bucket.</p>",
           "location":"header",
           "locationName":"Location"
+        },
+        "EnableNfsAccess":{
+          "shape":"EnableNfsAccess",
+          "location":"header",
+          "locationName":"x-ntnx-nfs-access-enabled",
+          "documentation":"<p>Specifies the NFS is enabled or not.</p>"
         }
       }
     },
@@ -3008,6 +3096,72 @@
           "location":"header",
           "locationName":"x-amz-object-ownership",
           "isNtnxSupported":false
+        },
+        "EnableNfsAccess":{
+          "shape":"EnableNfsAccess",
+          "location":"header",
+          "locationName":"x-ntnx-nfs-access-enabled",
+          "documentation":"<p>Enable the Nfs Access.</p>"
+        },
+        "NfsNumBucketPartitions":{
+          "shape":"NfsNumBucketPartitions",
+          "location":"header",
+          "locationName":"x-ntnx-nfs-num-bucket-partitions",
+          "documentation":"<p>Specifies the number of bucket partitions for the NFS enabled bucket.</p>"
+        },
+        "NfsAccessReadonly":{
+          "shape":"NfsAccessReadonly",
+          "location":"header",
+          "locationName":"x-ntnx-nfs-access-readonly",
+          "documentation":"<p>Specifies the readonly access for the NFS enabled bucket.</p>"
+        },
+        "NfsDefaultOwnerUid":{
+          "shape":"NfsDefaultOwnerUid",
+          "location":"header",
+          "locationName":"x-ntnx-nfs-default-owner-uid",
+          "documentation":"<p>Specifies the Default User id for the NFS enabled bucket.</p>"
+        },
+        "NfsDefaultOwnerGid":{
+          "shape":"NfsDefaultOwnerGid",
+          "location":"header",
+          "locationName":"x-ntnx-nfs-default-owner-gid",
+          "documentation":"<p>Specifies the Default Group id for the NFS enabled bucket.</p>"
+        },
+        "FederationName":{
+          "shape":"FederationName",
+          "location":"header",
+          "locationName":"x-ntnx-objects-namespace-name",
+          "documentation":"<p>Federation Namespace.</p>"
+        },
+        "FederationMemberFqdn":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"x-ntnx-federation-member-fqdn",
+          "documentation":"<p>FQDN of the member in Federation where bucket should be created.</p>"
+        },
+        "FederationMemberName":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"x-ntnx-federation-member-name",
+          "documentation":"<p>Name of the member in Federation where bucket should be created.</p>"
+        },
+        "FederationRemoteMemberFqdn":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"x-ntnx-federation-remote-member-fqdn",
+          "documentation":"<p>FQDN of a remote member in Federation from where bucket should be added.</p>"
+        },
+        "FederationRemoteBucketAccessKey":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"x-ntnx-federation-bucket-access-key",
+          "documentation":"<p>Access key for the remote bucket being added to the Federation namespace.</p>"
+        },
+        "FederationRemoteBucketSecretKey":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"x-ntnx-federation-bucket-secret-key",
+          "documentation":"<p>Secret key for the remote bucket being added to the Federation namespace.</p>"
         }
       },
       "payload":"CreateBucketConfiguration"
@@ -4181,6 +4335,14 @@
         "Message":{
           "shape":"Message",
           "documentation":"<p>The error message contains a generic description of the error condition in English. It is intended for a human audience. Simple programs display the message directly to the end user if they encounter an error condition they don't know how or don't care to handle. Sophisticated programs with more exhaustive error handling and proper internationalization are more likely to ignore the error message.</p>"
+        },
+        "Bucket":{
+          "shape":"Bucket",
+          "documentation":"<p>The bucket name for the error.</p>"
+        },
+        "ConfigId":{
+          "shape":"ConfigId",
+          "documentation":"<p>The inventory config ID of the error.</p>"
         }
       },
       "documentation":"<p>Container for all error elements.</p>"
@@ -6018,6 +6180,24 @@
           "documentation":"<p>Indicates whether the bucket name used in the request is an access point alias.</p> <note> <p>For directory buckets, the value of this field is <code>false</code>.</p> </note>",
           "location":"header",
           "locationName":"x-amz-access-point-alias"
+        },
+        "EnableNfsAccess":{
+          "shape":"EnableNfsAccess",
+          "location":"header",
+          "locationName":"x-ntnx-nfs-access-enabled",
+          "documentation":"<p>Specifies the NFS is enabled or not.</p>"
+        },
+        "FederationMemberFqdn":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"x-ntnx-federation-member-fqdn",
+          "documentation":"<p>FQDN of the member in Federation where bucket should be created.</p>"
+        },
+        "FederationMemberName":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"x-ntnx-federation-member-name",
+          "documentation":"<p>Name of the member in Federation where bucket should be created.</p>"
         }
       }
     },
@@ -8424,7 +8604,10 @@
     },
     "ObjectLockEnabled":{
       "type":"string",
-      "enum":["Enabled"]
+      "enum":[
+        "Enabled",
+        "Disabled"
+      ]
     },
     "ObjectLockEnabledForBucket":{
       "type":"boolean",
@@ -12501,6 +12684,438 @@
     "Years":{
       "type":"integer",
       "box":true
+    },
+    "GetObjectsDefaultRegionOutput":{
+      "type":"structure",
+      "members":{
+        "ObjectsDefaultRegion":{
+          "shape":"String"
+        }
+      },
+      "payload":"ObjectsDefaultRegion"
+    },
+    "GetObjectsAllDomainsOutput":{
+      "type":"structure",
+      "members":{
+        "ObjectsAllDomains":{
+          "shape":"String"
+        }
+      },
+      "payload":"ObjectsAllDomains"
+    },
+    "PutBucketNfsConfigRequest":{
+      "type":"structure",
+      "required":[
+        "Bucket",
+        "NfsConfiguration"
+      ],
+      "members":{
+        "Bucket":{
+          "shape":"BucketName",
+          "location":"uri",
+          "locationName":"Bucket",
+          "documentation":"<p>The NFS enabled bucket whose NFS configuration you want to create or replace.</p>"
+        },
+        "NfsConfiguration":{
+          "shape":"NfsConfiguration",
+          "locationName":"NfsConfiguration",
+          "documentation":"<p>The NFS configuration that you want to apply to the specified bucket.</p>"
+        }
+      },
+      "payload":"NfsConfiguration"
+    },
+    "GetBucketNfsConfigRequest":{
+      "type":"structure",
+      "required":["Bucket"],
+      "members":{
+        "Bucket":{
+          "shape":"BucketName",
+          "location":"uri",
+          "locationName":"Bucket",
+          "documentation":"<p>The NFS enabled bucket whose NFS configuration you want to get.</p>"
+        }
+      }
+    },
+    "GetBucketNfsConfigOutput":{
+      "type":"structure",
+      "members":{
+        "NfsConfiguration":{
+          "shape":"NfsConfiguration",
+          "locationName":"NfsConfiguration",
+          "documentation":"<p>Specifies the NFS configuration of specified NFS enabled bucket.</p>"
+        }
+      },
+      "payload":"NfsConfiguration"
+    },
+    "NfsConfiguration":{
+      "type":"structure",
+      "members":{
+        "Squash":{
+          "shape":"Squash",
+          "documentation":"<p>Squash option for NFS client access based on which a client's UID and GID is mapped to anonymous UID and GID.</p>"
+        },
+        "Owner":{
+          "shape":"NfsConfigOwner"
+        },
+        "Anonymous":{
+          "shape":"Anonymous"
+        },
+        "Permissions":{
+          "shape":"Permissions"
+        },
+        "ReadOnly":{
+          "shape":"ReadOnly",
+          "documentation":"<p>Whether the bucket is read only for NFS access.</p>"
+        },
+        "CoolOffThresholdSecs":{
+          "shape":"CoolOffThresholdSecs",
+          "documentation":"<p>Threshold in seconds used to determine whether to allow modification of a WORM protected file.</p>"
+        }
+      }
+    },
+    "NfsConfigOwner":{
+      "type":"structure",
+      "members":{
+        "UID":{
+          "shape":"UID",
+          "documentation":"<p>Owner UID of all the implicit directories and objects created through S3 protocol.</p>"
+        },
+        "GID":{
+          "shape":"GID",
+          "documentation":"<p>Owner GID of all the implicit directories and objects created through S3 protocol.</p>"
+        }
+      }
+    },
+    "Anonymous":{
+      "type":"structure",
+      "members":{
+        "UID":{
+          "shape":"UID",
+          "documentation":"<p>Anonymous UID.</p>"
+        },
+        "GID":{
+          "shape":"GID",
+          "documentation":"<p>Anonymous GID.</p>"
+        }
+      }
+    },
+    "Permissions":{
+      "type":"structure",
+      "members":{
+        "File":{
+          "shape":"FilePermissions",
+          "documentation":"<p>This is the file permission for Read, Write and Execute eg.'rwxrwxrwx'.</p>"
+        },
+        "Directory":{
+          "shape":"DirectoryPermissions",
+          "documentation":"<p>This is the directory permission for Read, Write and Execute eg.'rwxrwxrwx'.</p>"
+        }
+      }
+    },
+    "PutBucketInventoryStatusRequest":{
+      "type":"structure",
+      "required":["Update"],
+      "members":{
+        "Update":{
+          "shape":"Update",
+          "documentation":"<p>Container for the request.</p>",
+          "locationName":"Update"
+        }
+      },
+      "payload":"Update"
+    },
+    "PutBucketInventoryStatusOutput":{
+      "type":"structure",
+      "members":{
+        "UpdatedInventoryConfigs":{
+          "shape":"UpdatedInventoryConfigs",
+          "documentation":"<p>Container element for a successful update. It identifies the inventory configuration key that was successfully updated.</p>"
+        },
+        "Errors":{
+          "shape":"Errors",
+          "documentation":"<p>Container for a failed update operation that describes the inventory config id key that Objects attempted to update and the error is encountered.</p>",
+          "locationName":"Error"
+        }
+      }
+    },
+    "Update":{
+      "type":"structure",
+      "required":[
+        "InventoryConfigs",
+        "Status"
+      ],
+      "members":{
+        "InventoryConfigs":{
+          "shape":"InventoryConfigIdentifierList",
+          "documentation":"<p>The inventory config keys to update.</p>",
+          "locationName":"InventoryConfig"
+        },
+        "Status":{
+          "shape":"Status",
+          "documentation":"<p>The status value that we want to update the list of inventory config keys with. </p>",
+          "locationName":"Status"
+        },
+        "Quiet":{
+          "shape":"Quiet",
+          "documentation":"<p>Element to enable quiet mode for the request. When you add this element, you must set its value to true.</p>"
+        }
+      },
+      "documentation":"<p>Container for the inventory configs to update.</p>"
+    },
+    "InventoryConfigIdentifier":{
+      "type":"structure",
+      "required":[
+        "Bucket",
+        "ConfigId"
+      ],
+      "members":{
+        "Bucket":{
+          "shape":"Bucket",
+          "documentation":"<p>Bucket name for the bucket inventory config to be updated.</p>"
+        },
+        "ConfigId":{
+          "shape":"ConfigId",
+          "documentation":"<p>ConfigId for the bucket inventory config to be updated.</p>"
+        }
+      },
+      "documentation":"<p>Inventory config Identifier is unique value to identify inventory configs.</p>"
+    },
+    "InventoryConfigIdentifierList":{
+      "type":"list",
+      "member":{
+        "shape":"InventoryConfigIdentifier"
+       },
+      "flattened":true
+    },
+    "ConfigId":{
+      "type":"string",
+      "min":1
+    },
+    "Status":{
+      "type":"string",
+      "min":1
+    },
+    "VersionId":{
+      "type":"string"
+    },
+    "UpdatedInventoryConfigs":{
+      "type":"list",
+      "member":{
+        "shape":"UpdatedInventoryConfigIdentifier"
+      },
+      "flattened":true
+    },
+    "UpdatedInventoryConfigIdentifier":{
+      "type":"structure",
+      "required":[
+        "Bucket",
+        "ConfigId"
+      ],
+      "members":{
+        "Bucket":{
+          "shape":"Bucket",
+          "documentation":"<p>Bucket name for the bucket inventory config to be updated.</p>"
+        },
+        "ConfigId":{
+          "shape":"ConfigId",
+          "documentation":"<p>ConfigId for the bucket inventory config to be updated.</p>"
+        }
+      },
+      "documentation":"<p>Inventory config Identifier is unique value to identify inventory configs.</p>"
+    },
+    "GetBucketInventoryStatusRequest":{
+      "type":"structure",
+      "required":[
+        "Lookup"
+      ],
+      "members":{
+        "Lookup":{
+          "shape":"Lookup",
+          "documentation":"<p>Container for the request.</p>",
+          "locationName":"Lookup"
+        }
+      },
+      "payload":"Lookup"
+    },
+    "GetBucketInventoryStatusOutput":{
+      "type":"structure",
+      "members":{
+        "LookedupInventoryConfigs":{
+          "shape":"ReadInventoryConfigs",
+          "documentation":"<p>Container element for a successful update. It identifies the inventory configuration key that was successfully read.</p>"
+        },
+        "Errors":{
+          "shape":"Errors",
+          "documentation":"<p>Container for a failed lookup operation that describes the inventory config id key that Objects attempted to update and the error is encountered.</p>",
+          "locationName":"Error"
+        }
+      }
+    },
+    "Lookup":{
+      "type":"structure",
+      "required":[
+        "InventoryConfigs"
+      ],
+      "members":{
+        "InventoryConfigs":{
+          "shape":"InventoryConfigIdentifierList",
+          "documentation":"<p>The inventory config keys to lookup.</p>",
+          "locationName":"InventoryConfig"
+        }
+      },
+      "documentation":"<p>Container for the inventory configs to lookup.</p>"
+    },
+    "ReadInventoryConfigs":{
+      "type":"list",
+      "member":{
+        "shape":"ReadInventoryConfigIdentifier"
+      },
+      "flattened":true
+    },
+    "ReadInventoryConfigIdentifier":{
+      "type":"structure",
+      "required":[
+        "Bucket",
+        "ConfigId",
+        "Status",
+        "VersionId"
+      ],
+      "members":{
+        "Bucket":{
+          "shape":"Bucket",
+          "documentation":"<p>Bucket name for the bucket inventory config to be looked up.</p>"
+        },
+        "ConfigId":{
+          "shape":"ConfigId",
+          "documentation":"<p>ConfigId for the bucket inventory config to be looked up.</p>"
+        },
+        "Status":{
+          "shape":"Status",
+          "documentation":"<p>The status value of the inventory config key.</p>",
+          "locationName":"Status"
+        },
+        "VersionId":{
+          "shape":"VersionId",
+          "documentation":"<p>The version id value of the inventory config key.</p>"
+        }
+      },
+      "documentation":"<p>Inventory config Identifier is unique value to identify inventory configs.</p>"
+    },
+    "ListFederationMembersRequest":{
+      "type":"structure",
+      "members":{
+        "FederationName":{
+          "shape":"FederationName",
+          "location":"header",
+          "locationName":"x-ntnx-objects-namespace-name",
+          "documentation":"<p>Federation Namespace.</p>"
+        }
+      }
+    },
+    "ListFederationMembersResult":{
+      "type":"structure",
+      "members":{
+        "FederationMembers":{
+          "shape":"FederationMembersList",
+          "documentation":"<p>List of Federation Members.</p>",
+          "locationName":"FederationMember"
+        },
+        "FederationReleaseVersion":{
+          "shape":"String",
+          "documentation":"<p>Minimum Federation release version.</p>"
+        }
+      }
+    },
+    "FederationMembersList":{
+      "type":"list",
+      "member":{"shape":"FederationMember"},
+      "flattened":true
+    },
+    "FederationMember":{
+      "type":"structure",
+      "members":{
+        "Name":{
+          "shape":"String",
+          "documentation":"<p>Federation member name.</p>"
+        },
+        "Fqdn":{
+          "shape":"String",
+          "documentation":"<p>Federation member fqdn.</p>"
+        },
+        "Type":{
+          "shape":"FederationMemberType",
+          "documentation":"<p>Federation member type.</p>"
+        },
+        "Version":{
+          "shape":"String",
+          "documentation":"<p>Federation member version.</p>"
+        }
+      }
+    },
+    "String":{
+      "type":"string"
+    },
+    "FederationMemberType":{
+      "type":"string",
+      "enum":[
+        "kNutanixOss",
+        "kRemoteMember"
+      ]
+    },
+    "EnableNfsAccess":{
+      "type":"string",
+      "enum":[
+        "true",
+        "false"
+      ]
+    },
+    "NfsNumBucketPartitions":{
+      "type":"integer"
+    },
+    "NfsAccessReadonly":{
+      "type":"string",
+      "enum":[
+        "true",
+        "false"
+      ]
+    },
+    "NfsDefaultOwnerUid":{
+      "type":"integer"
+    },
+    "NfsDefaultOwnerGid":{
+      "type":"integer"
+    },
+    "Squash":{
+      "type":"string",
+      "enum":[
+        "RootSquash",
+        "AllSquash",
+        "NoSquash"
+      ]
+    },
+    "UID":{
+      "type":"integer"
+    },
+    "GID":{
+      "type":"integer"
+    },
+    "FilePermissions":{
+      "type":"string"
+    },
+    "DirectoryPermissions":{
+      "type":"string"
+    },
+    "ReadOnly":{
+      "type":"boolean"
+    },
+    "CoolOffThresholdSecs":{
+      "type":"integer"
+    },
+    "Seconds":{
+      "type":"integer"
+    },
+    "FederationName":{
+      "type":"string"
     }
   },
   "documentation":"<p/>",
