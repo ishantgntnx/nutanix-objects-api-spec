@@ -31,7 +31,7 @@
         {"shape":"NoSuchUpload"}
       ],
       "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/mpUploadAbort.html",
-      "documentation":"<p>Cancels an in-progress multipart upload for the specified object in the specified bucket. After cancellation, no additional parts can be uploaded using that upload ID and storage consumed by previously uploaded parts is released.</p>"
+      "documentation":"<p>Cancels an in-progress multipart upload for the specified object in the specified bucket. After cancellation, no additional parts can be uploaded using that upload ID and storage consumed by previously uploaded parts will be released.</p>"
     },
     "CompleteMultipartUpload":{
       "name":"CompleteMultipartUpload",
@@ -42,7 +42,7 @@
       "input":{"shape":"CompleteMultipartUploadRequest"},
       "output":{"shape":"CompleteMultipartUploadOutput"},
       "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/mpUploadComplete.html",
-      "documentation":"<p>Finalizes a multipart upload by assembling all previously uploaded parts into a single object. The request body must include the list of parts with their part numbers and ETag values in ascending order.</p>"
+      "documentation":"<p>Finalizes a multipart upload by assembling all previously uploaded parts into a single object. The request body must include the list of parts with their part numbers and ETag values in ascending order (lowest part number to highest part number).</p> <note> <p>The maximum size limit of a multipart object is 16 TiB. This limit is different from the standard S3 API limit of 48.8 TiB.</p> </note> <note> <p>User-defined object metadata is supported for the CompleteMultipartUpload APIs and is limited to 2 KB in size.</p> </note> <note> <p>User-provided metadata header names are stored in lowercase.</p> </note>"
     },
     "CopyObject":{
       "name":"CopyObject",
@@ -59,7 +59,7 @@
         }
       ],
       "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTObjectCOPY.html",
-      "documentation":"<p>Creates a server-side copy of an existing object within the same bucket or across buckets. The source object is identified through the x-amz-copy-source header. Nutanix Objects supports the STANDARD storage class only.</p>",
+      "documentation":"<p>Creates a server-side copy of an existing object within the same bucket or across buckets. The source object is identified through the x-amz-copy-source header.</p> <note> <p>User-defined object metadata is supported for the CopyObject APIs and is limited to 2 KB in size.</p> </note> <note> <p>User-provided metadata header names are stored in lowercase.</p> </note>",
       "alias":"PutObjectCopy",
       "staticContextParams":{
         "DisableS3ExpressSessionAuth":{"value":true}
@@ -78,7 +78,7 @@
         {"shape":"BucketAlreadyOwnedByYou"}
       ],
       "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUT.html",
-      "documentation":"<p>Creates a new bucket with the specified name. The authenticated user becomes the owner of the bucket.</p>",
+      "documentation":"<p>Creates a new bucket with the specified name.</p>",
       "alias":"PutBucket",
       "staticContextParams":{
         "DisableAccessPoints":{"value":true},
@@ -168,7 +168,7 @@
       },
       "input":{"shape":"DeleteBucketCorsRequest"},
       "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketDELETEcors.html",
-      "documentation":"<p>Removes the Cross-Origin Resource Sharing (CORS) configuration from the specified bucket. For details on CORS, refer to the AWS S3 documentation.</p>",
+      "documentation":"<p>Removes the Cross-Origin Resource Sharing (CORS) configuration from the specified bucket.</p>",
       "staticContextParams":{
         "UseS3ExpressControlEndpoint":{"value":true}
       }
@@ -224,7 +224,7 @@
       },
       "input":{"shape":"DeleteBucketLifecycleRequest"},
       "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketDELETElifecycle.html",
-      "documentation":"<p>Removes the lifecycle configuration from the specified bucket. For details on lifecycle rules, refer to the AWS S3 documentation.</p>",
+      "documentation":"<p>Removes the lifecycle configuration from the specified bucket.</p>",
       "staticContextParams":{
         "UseS3ExpressControlEndpoint":{"value":true}
       }
@@ -280,7 +280,7 @@
       },
       "input":{"shape":"DeleteBucketPolicyRequest"},
       "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketDELETEpolicy.html",
-      "documentation":"<p>Removes the bucket policy from the specified bucket. For details on bucket policy syntax, refer to the AWS S3 documentation.</p>",
+      "documentation":"<p>Removes the bucket policy from the specified bucket.</p> <note> <p>This operation is not supported for federated buckets.</p> </note>",
       "staticContextParams":{
         "UseS3ExpressControlEndpoint":{"value":true}
       }
@@ -321,7 +321,7 @@
       },
       "input":{"shape":"DeleteBucketWebsiteRequest"},
       "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketDELETEwebsite.html",
-      "documentation":"<p>Removes the static website hosting configuration from the specified bucket.</p>",
+      "documentation":"<p>Removes the static website hosting configuration from the specified bucket. For details on static website hosting, refer to the S3 documentation.</p>",
       "staticContextParams":{
         "UseS3ExpressControlEndpoint":{"value":true}
       }
@@ -402,7 +402,7 @@
       "input":{"shape":"GetBucketAclRequest"},
       "output":{"shape":"GetBucketAclOutput"},
       "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETacl.html",
-      "documentation":"<p>Retrieves the access control list (ACL) of the specified bucket. Nutanix Objects supports a limited set of canned ACLs. For details on ACL concepts, refer to the AWS S3 documentation.</p>",
+      "documentation":"<p>Retrieves the access control list (ACL) of the specified bucket. Nutanix Objects supports a limited set of canned ACLs. For details on ACL concepts, refer to the S3 documentation. <note> <p>Corresponding PutBucketAcl operation is not supported and response is based on the bucket policy.</p> </note></p>",
       "staticContextParams":{
         "UseS3ExpressControlEndpoint":{"value":true}
       }
@@ -430,7 +430,7 @@
       "input":{"shape":"GetBucketCorsRequest"},
       "output":{"shape":"GetBucketCorsOutput"},
       "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETcors.html",
-      "documentation":"<p>Retrieves the CORS configuration of the specified bucket. For details on CORS rules, refer to the AWS S3 documentation.</p>",
+      "documentation":"<p>Retrieves the CORS configuration of the specified bucket.</p>",
       "staticContextParams":{
         "UseS3ExpressControlEndpoint":{"value":true}
       }
@@ -501,7 +501,7 @@
       },
       "input":{"shape":"GetBucketLifecycleConfigurationRequest"},
       "output":{"shape":"GetBucketLifecycleConfigurationOutput"},
-      "documentation":"<p>Retrieves the lifecycle configuration of the specified bucket. Nutanix Objects does not support transition rules on NFS read-write buckets. For details on lifecycle rules, refer to the AWS S3 documentation.</p>",
+      "documentation":"<p>Retrieves the lifecycle configuration of the specified bucket.</p>",
       "staticContextParams":{
         "UseS3ExpressControlEndpoint":{"value":true}
       }
@@ -615,7 +615,7 @@
       "input":{"shape":"GetBucketPolicyRequest"},
       "output":{"shape":"GetBucketPolicyOutput"},
       "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETpolicy.html",
-      "documentation":"<p>Retrieves the bucket policy for the specified bucket. For details on bucket policies, refer to the AWS S3 documentation.</p>",
+      "documentation":"<p>Retrieves the bucket policy for the specified bucket.</p>",
       "staticContextParams":{
         "UseS3ExpressControlEndpoint":{"value":true}
       }
@@ -768,7 +768,7 @@
       },
       "input":{"shape":"GetObjectLegalHoldRequest"},
       "output":{"shape":"GetObjectLegalHoldOutput"},
-      "documentation":"<p>Retrieves the Object Lock legal hold status of the specified object. The bucket must have Object Lock active. For details on Object Lock, refer to the AWS S3 documentation.</p>"
+      "documentation":"<p>Retrieves the Object Lock legal hold status of the specified object.</p>"
     },
     "GetObjectLockConfiguration":{
       "name":"GetObjectLockConfiguration",
@@ -778,7 +778,7 @@
       },
       "input":{"shape":"GetObjectLockConfigurationRequest"},
       "output":{"shape":"GetObjectLockConfigurationOutput"},
-      "documentation":"<p>Retrieves the Object Lock configuration for the specified bucket. For details on Object Lock, refer to the AWS S3 documentation.</p>"
+      "documentation":"<p>Retrieves the Object Lock configuration for the specified bucket.</p>"
     },
     "GetObjectRetention":{
       "name":"GetObjectRetention",
@@ -788,7 +788,7 @@
       },
       "input":{"shape":"GetObjectRetentionRequest"},
       "output":{"shape":"GetObjectRetentionOutput"},
-      "documentation":"<p>Retrieves the Object Lock retention settings of the specified object. For details on retention modes, refer to the AWS S3 documentation.</p>"
+      "documentation":"<p>Retrieves the Object Lock retention settings of the specified object.</p>"
     },
     "GetObjectTagging":{
       "name":"GetObjectTagging",
@@ -919,7 +919,7 @@
       "input":{"shape":"ListBucketsRequest"},
       "output":{"shape":"ListBucketsOutput"},
       "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTServiceGET.html",
-      "documentation":"<p>Returns a list of all buckets owned by the authenticated user.</p>",
+      "documentation":"<p>Returns a list of all buckets owned by the authenticated user. <note> <p>This will also list the buckets that are shared with the authenticated user.</p> </note></p>",
       "alias":"GetService"
     },
     "ListDirectoryBuckets":{
@@ -945,7 +945,7 @@
       "input":{"shape":"ListMultipartUploadsRequest"},
       "output":{"shape":"ListMultipartUploadsOutput"},
       "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/mpUploadListMPUpload.html",
-      "documentation":"<p>Lists in-progress multipart uploads for the specified bucket. Filtering by key prefix and limiting results is supported.</p>"
+      "documentation":"<p>Lists in-progress multipart uploads for the specified bucket.</p>"
     },
     "ListObjectVersions":{
       "name":"ListObjectVersions",
@@ -971,7 +971,7 @@
         {"shape":"NoSuchBucket"}
       ],
       "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGET.html",
-      "documentation":"<p>Returns a list of objects in the specified bucket. This is the original listing operation; use ListObjectsV2 for improved behavior.</p>",
+      "documentation":"<p>Returns a list of objects in the specified bucket.</p> <note> <p>Usage of ListObjectsV2 is recommended for improved behavior.</p> </note>",
       "alias":"GetBucket"
     },
     "ListObjectsV2":{
@@ -1054,7 +1054,7 @@
       },
       "input":{"shape":"PutBucketCorsRequest"},
       "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTcors.html",
-      "documentation":"<p>Sets the CORS configuration for the specified bucket. For details on CORS rules, refer to the AWS S3 documentation.</p>",
+      "documentation":"<p>Sets the CORS configuration for the specified bucket. For details on CORS rules, refer <a href=\"https://portal.nutanix.com/page/documents/details?targetId=Objects-v5_2:top-cors-c.html\">CORS Configuration</a>.</p>",
       "httpChecksum":{
         "requestAlgorithmMember":"ChecksumAlgorithm",
         "requestChecksumRequired":true
@@ -1136,7 +1136,7 @@
         "shape":"PutBucketLifecycleConfigurationOutput",
         "isNtnxSupported":false
       },
-      "documentation":"<p>Sets the lifecycle configuration for the specified bucket. Nutanix Objects does not support transition rules on NFS read-write buckets. For details on lifecycle rules, refer to the AWS S3 documentation.</p>",
+      "documentation":"<p>Sets the lifecycle configuration for the specified bucket. For details on lifecycle rules, refer <a href=\"https://portal.nutanix.com/page/documents/details?targetId=Objects-v5_2:top-lifecycle-policies-c.html\">Lifecycle Policies</a>.</p> <note> <p>Nutanix Objects does not support transition rules on NFS read-write buckets. </p> </note> <note> <p>Only the fields mentioned below are supported. </p> </note>",
       "httpChecksum":{
         "requestAlgorithmMember":"ChecksumAlgorithm",
         "requestChecksumRequired":true
@@ -1202,7 +1202,7 @@
         "requestUri":"/{Bucket}?notification"
       },
       "input":{"shape":"PutBucketNotificationConfigurationRequest"},
-      "documentation":"<p>Sets the notification configuration for the specified bucket.</p>",
+      "documentation":"<p>Sets the notification configuration for the specified bucket. For more details, refer <a href=\"https://portal.nutanix.com/page/documents/details?targetId=Objects-v5_2:top-notifications-objects-c.html\">Nutanix Objects Notifications</a> and S3 documentation.</p> <note> <p>Only the fields mentioned below are supported. </p> </note>",
       "staticContextParams":{
         "UseS3ExpressControlEndpoint":{"value":true}
       }
@@ -1229,7 +1229,7 @@
       },
       "input":{"shape":"PutBucketPolicyRequest"},
       "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTpolicy.html",
-      "documentation":"<p>Applies a bucket policy to the specified bucket. For details on bucket policy syntax, refer to the AWS S3 documentation.</p>",
+      "documentation":"<p>Applies a bucket policy to the specified bucket. For details on bucket policy syntax, refer to the S3 documentation.</p> <note> <p>TODO: Find and attach some documentation link here on supported payload </p> </note>",
       "httpChecksum":{
         "requestAlgorithmMember":"ChecksumAlgorithm",
         "requestChecksumRequired":true
@@ -1245,7 +1245,7 @@
         "requestUri":"/{Bucket}?replication"
       },
       "input":{"shape":"PutBucketReplicationRequest"},
-      "documentation":"<p>Sets the replication configuration for the specified bucket.</p>",
+      "documentation":"<p>Sets the replication configuration for the specified bucket. Refer <a href=\"https://portal.nutanix.com/page/documents/details?targetId=Objects-v5_2:top-objects-replication-c.html\">Replication</a> for more details on this feature.</p> <note> <p>Only the fields mentioned below are supported. </p> </note>",
       "httpChecksum":{
         "requestAlgorithmMember":"ChecksumAlgorithm",
         "requestChecksumRequired":true
@@ -1280,7 +1280,7 @@
       },
       "input":{"shape":"PutBucketTaggingRequest"},
       "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTtagging.html",
-      "documentation":"<p>Applies a tag set to the specified bucket.</p>",
+      "documentation":"<p>Applies a tag set to the specified bucket. More details on bucket tagging can be found <a href=\"https://portal.nutanix.com/page/documents/details?targetId=Nutanix-Objects-v5_3:top-api-operations-supported-for-tagging-s3api-c.html\">here</a>.</p>",
       "httpChecksum":{
         "requestAlgorithmMember":"ChecksumAlgorithm",
         "requestChecksumRequired":true
@@ -1297,7 +1297,7 @@
       },
       "input":{"shape":"PutBucketVersioningRequest"},
       "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTVersioningStatus.html",
-      "documentation":"<p>Sets the versioning state of the specified bucket.</p>",
+      "documentation":"<p>Sets the versioning state of the specified bucket. More details on versioning can be found <a href=\"https://portal.nutanix.com/page/documents/details?targetId=Nutanix-Objects-v5_3:top-object-versioning-c.html\">here</a>.</p>",
       "httpChecksum":{
         "requestAlgorithmMember":"ChecksumAlgorithm",
         "requestChecksumRequired":true
@@ -1314,7 +1314,7 @@
       },
       "input":{"shape":"PutBucketWebsiteRequest"},
       "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTwebsite.html",
-      "documentation":"<p>Sets the static website hosting configuration for the specified bucket.</p>",
+      "documentation":"<p>Sets the static website hosting configuration for the specified bucket. More details on website hosting can be found <a href=\"https://portal.nutanix.com/page/documents/details?targetId=Nutanix-Objects-v5_3:top-configure-static-website-hosting-t.html\">here</a>.</p>",
       "httpChecksum":{
         "requestAlgorithmMember":"ChecksumAlgorithm",
         "requestChecksumRequired":true
@@ -1347,7 +1347,7 @@
         }
       ],
       "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTObjectPUT.html",
-      "documentation":"<p>Uploads an object to the specified bucket. The request body contains the object data. Nutanix Objects supports the STANDARD storage class only.</p>",
+      "documentation":"<p>Uploads an object to the specified bucket.</p> <note> <p>User-defined object metadata is supported for the PutObject APIs and is limited to 2 KB in size.</p> </note> <note> <p>User-provided metadata header names are stored in lowercase.</p> </note>",
       "httpChecksum":{
         "requestAlgorithmMember":"ChecksumAlgorithm",
         "requestChecksumRequired":false
@@ -1383,7 +1383,7 @@
         "shape":"PutObjectLegalHoldOutput",
         "isNtnxSupported":false
       },
-      "documentation":"<p>Applies or removes an Object Lock legal hold on the specified object. The bucket must have Object Lock configured. For details on Object Lock, refer to the AWS S3 documentation.</p>",
+      "documentation":"<p>Applies or removes an Object Lock legal hold on the specified object. The bucket must have Object Lock configured. For details on legal hold, refer <a href=\"https://portal.nutanix.com/page/documents/details?targetId=Nutanix-Objects-v5_3:top-legal-hold-object-c.html\">here</a>.</p>",
       "httpChecksum":{
         "requestAlgorithmMember":"ChecksumAlgorithm",
         "requestChecksumRequired":true
@@ -1400,7 +1400,7 @@
         "shape":"PutObjectLockConfigurationOutput",
         "isNtnxSupported":false
       },
-      "documentation":"<p>Sets the Object Lock configuration for the specified bucket. For details on Object Lock, refer to the AWS S3 documentation.</p>",
+      "documentation":"<p>Sets the Object Lock configuration for the specified bucket to enable WORM protection. For more details on WORM, refer <a href=\"https://portal.nutanix.com/page/documents/details?targetId=Nutanix-Objects-v5_3:top-worm-bucket-c.html\">here</a>.</p> <note> <p>Only COMPLIANCE and NtnxWORM retention modes are supported.</p> </note>",
       "httpChecksum":{
         "requestAlgorithmMember":"ChecksumAlgorithm",
         "requestChecksumRequired":true
@@ -1417,7 +1417,7 @@
         "shape":"PutObjectRetentionOutput",
         "isNtnxSupported":false
       },
-      "documentation":"<p>Sets the retention parameters for the specified object. For details on retention modes, refer to the AWS S3 documentation.</p>",
+      "documentation":"<p>Sets the retention configuration for the specified object to enable WORM protection. For more details on WORM, refer <a href=\"https://portal.nutanix.com/page/documents/details?targetId=Nutanix-Objects-v5_3:top-worm-bucket-c.html\">here</a>.</p> <note> <p>Only COMPLIANCE and NtnxWORM retention modes are supported.</p> </note> ",
       "httpChecksum":{
         "requestAlgorithmMember":"ChecksumAlgorithm",
         "requestChecksumRequired":true
@@ -1431,7 +1431,7 @@
       },
       "input":{"shape":"PutObjectTaggingRequest"},
       "output":{"shape":"PutObjectTaggingOutput"},
-      "documentation":"<p>Applies a tag set to the specified object.</p>",
+      "documentation":"<p>Applies a tag set to the specified object. More details on object tagging can be found <a href=\"https://portal.nutanix.com/page/documents/details?targetId=Nutanix-Objects-v5_3:top-api-operations-supported-for-tagging-s3api-c.html\">here</a>.</p>",
       "httpChecksum":{
         "requestAlgorithmMember":"ChecksumAlgorithm",
         "requestChecksumRequired":true
@@ -1486,7 +1486,7 @@
         "xmlNamespace":{"uri":"http://s3.amazonaws.com/doc/2006-03-01/"}
       },
       "output":{"shape":"SelectObjectContentOutput"},
-      "documentation":"<p>Runs a structured query (SQL) against the contents of the specified object and returns matching records. Nutanix Objects supports a subset of S3 Select functionality.</p>"
+      "documentation":"<p>Runs a structured query (SQL) against the contents of the specified object and returns matching records. More details on S3 Select can be found <a href=\"https://portal.nutanix.com/page/documents/details?targetId=Nutanix-Objects-v5_3:top-s3-select-objects-api-r.html\">here</a>.</p> <note> <p>Nutanix Objects only supports CSV as both input and output serialization formats.</p> </note> <note> <p>Only the fields mentioned below are supported.</p> </note>"
     },
     "UploadPart":{
       "name":"UploadPart",
@@ -1497,7 +1497,7 @@
       "input":{"shape":"UploadPartRequest"},
       "output":{"shape":"UploadPartOutput"},
       "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/mpUploadUploadPart.html",
-      "documentation":"<p>Uploads a single part in a multipart upload. Each request must specify the upload ID and a sequential part number between 1 and 10,000.</p>",
+      "documentation":"<p>Uploads a single part in a multipart upload. The multipart upload must initiated using CreateMultipartUpload API before uploading any parts. Each request must specify the upload ID and a sequential part number between 1 and 10,000.</p>",
       "httpChecksum":{
         "requestAlgorithmMember":"ChecksumAlgorithm",
         "requestChecksumRequired":false
@@ -1512,7 +1512,7 @@
       "input":{"shape":"UploadPartCopyRequest"},
       "output":{"shape":"UploadPartCopyOutput"},
       "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/mpUploadUploadPartCopy.html",
-      "documentation":"<p>Copies data from an existing object as a part in a multipart upload. The source object and byte range are specified through request headers.</p>",
+      "documentation":"<p>Uploads a part in a multipart upload by copying data from given source object and byte range.</p>",
       "staticContextParams":{
         "DisableS3ExpressSessionAuth":{"value":true}
       }
@@ -1543,7 +1543,7 @@
         "responseCode":200
       },
       "output":{"shape":"GetObjectsDefaultRegionOutput"},
-      "documentation":"<p>Returns the default region configured for the Nutanix Objects deployment. This is a Nutanix Objects-specific operation.</p>",
+      "documentation":"<p>Returns the default region configured for the Nutanix Objects deployment.</p> <note> <p>This is a non-authenticated request.</p> </note>",
       "authtype":"none"
     },
     "GetObjectsAllDomains":{
@@ -1554,7 +1554,7 @@
         "responseCode":200
       },
       "output":{"shape":"GetObjectsAllDomainsOutput"},
-      "documentation":"<p>Returns all domain endpoints configured for the Nutanix Objects deployment. This is a Nutanix Objects-specific operation.</p>",
+      "documentation":"<p>Returns all domain endpoints configured for the Nutanix Objects deployment.</p>",
       "authtype":"none"
     },
     "PutBucketNfsConfiguration":{
@@ -1565,7 +1565,7 @@
         "responseCode":200
       },
       "input":{"shape":"PutBucketNfsConfigRequest"},
-      "documentation":"<p>Sets the NFS access configuration for the specified bucket. NFS-configured buckets support both S3 and NFS protocol access. This is a Nutanix Objects-specific operation.</p>"
+      "documentation":"<p>Sets the NFS access configuration for the specified bucket. NFS-configured buckets support both S3 and NFS protocol access. More details on this feature can be found <a href=\"https://portal.nutanix.com/page/documents/details?targetId=Objects-v5_2:top-create-configure-buckets-nfs-t.html\">here</a>.</p>"
     },
     "GetBucketNfsConfiguration":{
       "name":"GetBucketNfsConfiguration",
@@ -1576,7 +1576,7 @@
       },
       "input":{"shape":"GetBucketNfsConfigRequest"},
       "output":{"shape":"GetBucketNfsConfigOutput"},
-      "documentation":"<p>Retrieves the NFS access configuration of the specified bucket. This is a Nutanix Objects-specific operation.</p>"
+      "documentation":"<p>Retrieves the NFS access configuration of the specified bucket.</p>"
     },
     "PutBucketInventoryStatus":{
       "name":"PutBucketInventoryStatus",
@@ -1587,7 +1587,7 @@
       },
       "input":{"shape":"PutBucketInventoryStatusRequest"},
       "output":{"shape":"PutBucketInventoryStatusOutput"},
-      "documentation":"<p>Updates the inventory collection status for bucket metadata. This is a Nutanix Objects-specific operation.</p>",
+      "documentation":"<p>This operation enables you to update the status of multiple inventory configurations using a single HTTP request. If you know the bucket inventory configurations that you want to update, this operation provides a suitable alternative to sending individual update requests, reducing per-request overhead.</p> <p>The request contains a list of up to 1000 inventory configuration keys that you want to update. In the XML, you provide the bucket names and respective inventory config ids. For each bucket name-inventory config id pair, it performs an update operation and returns the result of that update, success, or failure, in the response.</p> <p> The operation supports two modes for the response: verbose and quiet. By default, the operation uses verbose mode in which the response includes the result of deletion of each key in your request. In quiet mode the response includes only keys where the update operation encountered an error. For a successful update, the operation does not return any information about the update in the response body.</p>",
       "httpChecksumRequired":true
     },
     "GetBucketInventoryStatus":{
@@ -1599,7 +1599,7 @@
       },
       "input":{"shape":"GetBucketInventoryStatusRequest"},
       "output":{"shape":"GetBucketInventoryStatusOutput"},
-      "documentation":"<p>Retrieves the inventory collection status for bucket metadata. This is a Nutanix Objects-specific operation.</p>",
+      "documentation":"<p>This operation enables you to read the status of multiple inventory configurations using a single HTTP request. If you know the bucket inventory configurations that you want to get the status of, this operation provides a suitable alternative to sending individual get status requests, reducing per-request overhead.</p> <p>The request contains a list of up to 1000 inventory configuration keys that you want to get the status of. In the XML, you provide the bucket names and respective inventory config ids. For each bucket name-inventory config id pair, it performs a get status operation and returns the result of that update, success, or failure, in the response.</p>",
       "httpChecksumRequired":true
     },
     "ListFederationMembers":{
@@ -1611,7 +1611,7 @@
       },
       "input":{"shape":"ListFederationMembersRequest"},
       "output":{"shape":"ListFederationMembersResult"},
-      "documentation":"<p>Returns the list of federation members in the configured namespace. This is a Nutanix Objects-specific operation for federated object store deployments.</p>"
+      "documentation":"<p>Fetches the list of all members in the specified Federation.</p>"
     }
   },
   "shapes":{
@@ -1632,7 +1632,8 @@
         "RequestCharged":{
           "shape":"RequestCharged",
           "location":"header",
-          "locationName":"x-amz-request-charged"
+          "locationName":"x-amz-request-charged",
+          "isNtnxSupported":false
         }
       }
     },
@@ -2258,7 +2259,7 @@
         },
         "ETag":{
           "shape":"ETag",
-          "documentation":"<p>The entity tag (ETag) of the object, which is a hash of the object content.</p>"
+          "documentation":"<p>The entity tag (ETag) of the object.</p>"
         },
         "ChecksumCRC32":{
           "shape":"ChecksumCRC32",
@@ -2398,7 +2399,7 @@
         },
         "IfNoneMatch":{
           "shape":"IfNoneMatch",
-          "documentation":"<p>Returns the object only if the ETag does not match the specified value.</p>",
+          "documentation":"<p>Returns the object only if the ETag does not match the specified value.</p> <note> <p>Nutanix Objects validates the If-Match and If-None-Match condition only at the start and end of an object upload. If it matches at both points, the request is accepted. Even if multiple competing requests modify the object state during the upload and cancel effects of each other, the conditional request is still considered valid and accepted.</p> </note>",
           "location":"header",
           "locationName":"If-None-Match"
         },
@@ -2439,7 +2440,7 @@
       "members":{
         "ETag":{
           "shape":"ETag",
-          "documentation":"<p>The entity tag (ETag) of the object, which is a hash of the object content.</p>"
+          "documentation":"<p>The entity tag (ETag) of the part.</p>"
         },
         "ChecksumCRC32":{
           "shape":"ChecksumCRC32",
@@ -2528,7 +2529,7 @@
         },
         "CopySourceVersionId":{
           "shape":"CopySourceVersionId",
-          "documentation":"<p>The version ID of the source object for the copy.</p>",
+          "documentation":"<p>The version ID of the source object that was copied, if versioning is enabled on the source bucket.</p>",
           "location":"header",
           "locationName":"x-amz-copy-source-version-id"
         },
@@ -2597,7 +2598,7 @@
       "members":{
         "ACL":{
           "shape":"ObjectCannedACL",
-          "documentation":"<p>The canned ACL to apply. For details on ACL values, refer to the AWS S3 documentation.</p>",
+          "documentation":"<p>The canned ACL to apply. For details on ACL values, refer to the S3 documentation.</p>",
           "location":"header",
           "locationName":"x-amz-acl",
           "isNtnxSupported":false
@@ -2865,7 +2866,7 @@
       "members":{
         "ETag":{
           "shape":"ETag",
-          "documentation":"<p>The entity tag (ETag) of the object, which is a hash of the object content.</p>"
+          "documentation":"<p>The entity tag (ETag) of the object.</p>"
         },
         "LastModified":{
           "shape":"LastModified",
@@ -2899,7 +2900,7 @@
       "members":{
         "ETag":{
           "shape":"ETag",
-          "documentation":"<p>The entity tag (ETag) of the object, which is a hash of the object content.</p>"
+          "documentation":"<p>The entity tag (ETag) of the object.</p>"
         },
         "LastModified":{
           "shape":"LastModified",
@@ -2949,7 +2950,7 @@
       "members":{
         "LocationConstraint":{
           "shape":"BucketLocationConstraint",
-          "documentation":"<p>The region where the bucket resides.</p>"
+          "documentation":"<p>The region where the bucket resides.</p> <note> <p>By default, Nutanix Objects uses the us-east-1 region. Note that this is only a placeholder and does not determine the bucket’s actual physical location. If this setting needs to be overridden, please contact Nutanix Support.</p> </note>"
         },
         "Location":{
           "shape":"LocationInfo",
@@ -3018,7 +3019,7 @@
           "shape":"EnableNfsAccess",
           "location":"header",
           "locationName":"x-ntnx-nfs-access-enabled",
-          "documentation":"<p>Indicates whether NFS access is active for the bucket. This is a Nutanix Objects-specific parameter.</p>"
+          "documentation":"<p>Indicates whether NFS access is enabled for the bucket.</p>"
         }
       }
     },
@@ -3028,7 +3029,7 @@
       "members":{
         "ACL":{
           "shape":"BucketCannedACL",
-          "documentation":"<p>The canned ACL to apply. For details on ACL values, refer to the AWS S3 documentation.</p>",
+          "documentation":"<p>The canned ACL to apply. For details on ACL values, refer to the S3 documentation.</p>",
           "location":"header",
           "locationName":"x-amz-acl",
           "isNtnxSupported":false
@@ -3042,7 +3043,7 @@
         },
         "CreateBucketConfiguration":{
           "shape":"CreateBucketConfiguration",
-          "documentation":"<p>The configuration for bucket creation, including location constraint.</p>",
+          "documentation":"<p>The configuration for bucket creation.</p>",
           "locationName":"CreateBucketConfiguration",
           "xmlNamespace":{"uri":"http://s3.amazonaws.com/doc/2006-03-01/"}
         },
@@ -3083,7 +3084,7 @@
         },
         "ObjectLockEnabledForBucket":{
           "shape":"ObjectLockEnabledForBucket",
-          "documentation":"<p>Indicates whether Object Lock is active for the bucket.</p>",
+          "documentation":"<p>Specifies whether you want Object Lock to be enabled for the bucket.</p>",
           "location":"header",
           "locationName":"x-amz-bucket-object-lock-enabled"
         },
@@ -3097,67 +3098,61 @@
           "shape":"EnableNfsAccess",
           "location":"header",
           "locationName":"x-ntnx-nfs-access-enabled",
-          "documentation":"<p>Indicates whether NFS access is active for the bucket. This is a Nutanix Objects-specific parameter.</p>"
+          "documentation":"<p>Specifies whether you want NFS access to be enabled for the bucket.</p>"
         },
         "NfsNumBucketPartitions":{
           "shape":"NfsNumBucketPartitions",
           "location":"header",
           "locationName":"x-ntnx-nfs-num-bucket-partitions",
-          "documentation":"<p>The nfs num bucket partitions.</p>"
+          "documentation":"<p>Specifies the number of bucket partitions for the NFS enabled bucket.</p>"
         },
         "NfsAccessReadonly":{
           "shape":"NfsAccessReadonly",
           "location":"header",
           "locationName":"x-ntnx-nfs-access-readonly",
-          "documentation":"<p>The nfs access readonly.</p>"
+          "documentation":"<p>Specifies whether you want to enable read-only access for the NFS enabled bucket.</p>"
         },
         "NfsDefaultOwnerUid":{
           "shape":"NfsDefaultOwnerUid",
           "location":"header",
           "locationName":"x-ntnx-nfs-default-owner-uid",
-          "documentation":"<p>The nfs default owner uid.</p>"
+          "documentation":"<p>Specifies the default user id for the NFS enabled bucket.</p>"
         },
         "NfsDefaultOwnerGid":{
           "shape":"NfsDefaultOwnerGid",
           "location":"header",
           "locationName":"x-ntnx-nfs-default-owner-gid",
-          "documentation":"<p>The nfs default owner gid.</p>"
+          "documentation":"<p>Specifies the default owner GID for the bucket.</p>"
         },
         "FederationName":{
           "shape":"FederationName",
           "location":"header",
           "locationName":"x-ntnx-objects-namespace-name",
-          "documentation":"<p>The name of the federation. This is a Nutanix Objects-specific parameter.</p>"
+          "documentation":"<p>Specifies the federation namespace in which the bucket exists.</p>"
         },
         "FederationMemberFqdn":{
           "shape":"String",
           "location":"header",
           "locationName":"x-ntnx-federation-member-fqdn",
-          "documentation":"<p>The fully qualified domain name of the federation member. This is a Nutanix Objects-specific parameter.</p>"
-        },
-        "FederationMemberName":{
-          "shape":"String",
-          "location":"header",
-          "locationName":"x-ntnx-federation-member-name",
-          "documentation":"<p>The name of the federation member. This is a Nutanix Objects-specific parameter.</p>"
+          "documentation":"<p>Specifies the fully qualified domain name of the member in federation where bucket should be created.</p>"
         },
         "FederationRemoteMemberFqdn":{
           "shape":"String",
           "location":"header",
           "locationName":"x-ntnx-federation-remote-member-fqdn",
-          "documentation":"<p>The fully qualified domain name of the remote federation member. This is a Nutanix Objects-specific parameter.</p>"
+          "documentation":"<p>Specifies the fully qualified domain name of the remote federation member.</p>"
         },
         "FederationRemoteBucketAccessKey":{
           "shape":"String",
           "location":"header",
           "locationName":"x-ntnx-federation-bucket-access-key",
-          "documentation":"<p>The access key for the remote federation bucket. This is a Nutanix Objects-specific parameter.</p>"
+          "documentation":"<p>Specifies the access key for the remote bucket being added to the federation namespace.</p>"
         },
         "FederationRemoteBucketSecretKey":{
           "shape":"String",
           "location":"header",
           "locationName":"x-ntnx-federation-bucket-secret-key",
-          "documentation":"<p>The secret key for the remote federation bucket. This is a Nutanix Objects-specific parameter.</p>"
+          "documentation":"<p>Specifies the secret key for the remote bucket being added to the federation namespace.</p>"
         }
       },
       "payload":"CreateBucketConfiguration"
@@ -3256,7 +3251,7 @@
       "members":{
         "ACL":{
           "shape":"ObjectCannedACL",
-          "documentation":"<p>The canned ACL to apply. For details on ACL values, refer to the AWS S3 documentation.</p>",
+          "documentation":"<p>The canned ACL to apply. For details on ACL values, refer to the S3 documentation.</p>",
           "location":"header",
           "locationName":"x-amz-acl",
           "isNtnxSupported":false
@@ -3553,7 +3548,7 @@
       "members":{
         "Mode":{
           "shape":"ObjectLockRetentionMode",
-          "documentation":"<p>The Object Lock retention mode (GOVERNANCE or COMPLIANCE).</p>"
+          "documentation":"<p>The Object Lock retention mode.</p>"
         },
         "Days":{
           "shape":"Days",
@@ -4004,7 +3999,7 @@
         },
         "BypassGovernanceRetention":{
           "shape":"BypassGovernanceRetention",
-          "documentation":"<p>Indicates whether to bypass governance-mode retention. For details, refer to the AWS S3 documentation.</p>",
+          "documentation":"<p>Indicates whether to bypass governance-mode retention. For details, refer to the S3 documentation.</p>",
           "location":"header",
           "locationName":"x-amz-bypass-governance-retention",
           "isNtnxSupported":false
@@ -4137,7 +4132,7 @@
         },
         "BypassGovernanceRetention":{
           "shape":"BypassGovernanceRetention",
-          "documentation":"<p>Indicates whether to bypass governance-mode retention. For details, refer to the AWS S3 documentation.</p>",
+          "documentation":"<p>Indicates whether to bypass governance-mode retention. For details, refer to the S3 documentation.</p>",
           "location":"header",
           "locationName":"x-amz-bypass-governance-retention",
           "isNtnxSupported":false
@@ -4810,7 +4805,7 @@
       "members":{
         "LocationConstraint":{
           "shape":"BucketLocationConstraint",
-          "documentation":"<p>The region where the bucket resides.</p>"
+          "documentation":"<p>The region where the bucket resides.</p> <note> <p>By default, Nutanix Objects uses the us-east-1 region. Note that this is only a placeholder and does not determine the bucket’s actual physical location. If this setting needs to be overridden, please contact Nutanix Support.</p> </note>"
         }
       }
     },
@@ -5305,7 +5300,7 @@
         },
         "ETag":{
           "shape":"ETag",
-          "documentation":"<p>The entity tag (ETag) of the object, which is a hash of the object content.</p>"
+          "documentation":"<p>The entity tag (ETag) of the object.</p>"
         },
         "Checksum":{
           "shape":"Checksum",
@@ -5562,7 +5557,7 @@
         },
         "ETag":{
           "shape":"ETag",
-          "documentation":"<p>The entity tag (ETag) of the object, which is a hash of the object content.</p>",
+          "documentation":"<p>The entity tag (ETag) of the object.</p>",
           "location":"header",
           "locationName":"ETag"
         },
@@ -6181,19 +6176,19 @@
           "shape":"EnableNfsAccess",
           "location":"header",
           "locationName":"x-ntnx-nfs-access-enabled",
-          "documentation":"<p>Indicates whether NFS access is active for the bucket. This is a Nutanix Objects-specific parameter.</p>"
+          "documentation":"<p>Indicates whether NFS access is enabled for the bucket.</p>"
         },
         "FederationMemberFqdn":{
           "shape":"String",
           "location":"header",
           "locationName":"x-ntnx-federation-member-fqdn",
-          "documentation":"<p>The fully qualified domain name of the federation member. This is a Nutanix Objects-specific parameter.</p>"
+          "documentation":"<p>The fully qualified domain name of the member in federation where bucket exists.</p>"
         },
         "FederationMemberName":{
           "shape":"String",
           "location":"header",
           "locationName":"x-ntnx-federation-member-name",
-          "documentation":"<p>The name of the federation member. This is a Nutanix Objects-specific parameter.</p>"
+          "documentation":"<p>The name of the member in federation where bucket exists.</p>"
         }
       }
     },
@@ -6294,7 +6289,7 @@
         },
         "ETag":{
           "shape":"ETag",
-          "documentation":"<p>The entity tag (ETag) of the object, which is a hash of the object content.</p>",
+          "documentation":"<p>The entity tag (ETag) of the object.</p>",
           "location":"header",
           "locationName":"ETag"
         },
@@ -6633,7 +6628,8 @@
         },
         "CompressionType":{
           "shape":"CompressionType",
-          "documentation":"<p>The compression format of the input object.</p>"
+          "documentation":"<p>The compression format of the input object.</p>",
+          "isNtnxSupported":false
         },
         "JSON":{
           "shape":"JSONInput",
@@ -8478,7 +8474,7 @@
         },
         "ETag":{
           "shape":"ETag",
-          "documentation":"<p>The entity tag (ETag) of the object, which is a hash of the object content.</p>"
+          "documentation":"<p>The entity tag (ETag) of the object.</p>"
         },
         "ChecksumAlgorithm":{
           "shape":"ChecksumAlgorithmList",
@@ -8554,7 +8550,7 @@
         },
         "ETag":{
           "shape":"ETag",
-          "documentation":"<p>The entity tag (ETag) of the object, which is a hash of the object content.</p>",
+          "documentation":"<p>The entity tag (ETag) of the object.</p>",
           "isNtnxSupported":false
         },
         "LastModifiedTime":{
@@ -8629,8 +8625,8 @@
     "ObjectLockMode":{
       "type":"string",
       "enum":[
-        "GOVERNANCE",
-        "COMPLIANCE"
+        "COMPLIANCE",
+        "NtnxWORM"
       ]
     },
     "ObjectLockRetainUntilDate":{
@@ -8642,7 +8638,7 @@
       "members":{
         "Mode":{
           "shape":"ObjectLockRetentionMode",
-          "documentation":"<p>The Object Lock retention mode (GOVERNANCE or COMPLIANCE).</p>"
+          "documentation":"<p>The Object Lock retention mode.</p>"
         },
         "RetainUntilDate":{
           "shape":"Date",
@@ -8654,7 +8650,6 @@
     "ObjectLockRetentionMode":{
       "type":"string",
       "enum":[
-        "GOVERNANCE",
         "COMPLIANCE",
         "NtnxWORM"
       ]
@@ -8750,7 +8745,7 @@
       "members":{
         "ETag":{
           "shape":"ETag",
-          "documentation":"<p>The entity tag (ETag) of the object, which is a hash of the object content.</p>"
+          "documentation":"<p>The entity tag (ETag) of the object.</p>"
         },
         "ChecksumAlgorithm":{
           "shape":"ChecksumAlgorithmList",
@@ -8899,7 +8894,7 @@
         },
         "ETag":{
           "shape":"ETag",
-          "documentation":"<p>The entity tag (ETag) of the object, which is a hash of the object content.</p>"
+          "documentation":"<p>The entity tag (ETag) of the object.</p>"
         },
         "Size":{
           "shape":"Size",
@@ -9100,7 +9095,7 @@
       "members":{
         "ACL":{
           "shape":"BucketCannedACL",
-          "documentation":"<p>The canned ACL to apply. For details on ACL values, refer to the AWS S3 documentation.</p>",
+          "documentation":"<p>The canned ACL to apply. For details on ACL values, refer to the S3 documentation.</p>",
           "location":"header",
           "locationName":"x-amz-acl"
         },
@@ -9360,7 +9355,8 @@
           "shape":"TransitionDefaultMinimumObjectSize",
           "documentation":"<p>The minimum object size for transition rules.</p>",
           "location":"header",
-          "locationName":"x-amz-transition-default-minimum-object-size"
+          "locationName":"x-amz-transition-default-minimum-object-size",
+          "isNtnxSupported":false
         }
       }
     },
@@ -9861,7 +9857,8 @@
           "shape":"AccountId",
           "documentation":"<p>The expected owner of the bucket. The request fails if the actual owner does not match.</p>",
           "location":"header",
-          "locationName":"x-amz-expected-bucket-owner"
+          "locationName":"x-amz-expected-bucket-owner",
+          "isNtnxSupported":false
         }
       },
       "payload":"VersioningConfiguration"
@@ -9928,7 +9925,7 @@
       "members":{
         "ACL":{
           "shape":"ObjectCannedACL",
-          "documentation":"<p>The canned ACL to apply. For details on ACL values, refer to the AWS S3 documentation.</p>",
+          "documentation":"<p>The canned ACL to apply. For details on ACL values, refer to the S3 documentation.</p>",
           "location":"header",
           "locationName":"x-amz-acl"
         },
@@ -10020,7 +10017,8 @@
         "RequestCharged":{
           "shape":"RequestCharged",
           "location":"header",
-          "locationName":"x-amz-request-charged"
+          "locationName":"x-amz-request-charged",
+          "isNtnxSupported":false
         }
       }
     },
@@ -10091,7 +10089,8 @@
         "RequestCharged":{
           "shape":"RequestCharged",
           "location":"header",
-          "locationName":"x-amz-request-charged"
+          "locationName":"x-amz-request-charged",
+          "isNtnxSupported":false
         }
       }
     },
@@ -10159,7 +10158,7 @@
         },
         "ETag":{
           "shape":"ETag",
-          "documentation":"<p>The entity tag (ETag) of the object, which is a hash of the object content.</p>",
+          "documentation":"<p>The entity tag (ETag) of the object.</p>",
           "location":"header",
           "locationName":"ETag"
         },
@@ -10261,7 +10260,7 @@
       "members":{
         "ACL":{
           "shape":"ObjectCannedACL",
-          "documentation":"<p>The canned ACL to apply. For details on ACL values, refer to the AWS S3 documentation.</p>",
+          "documentation":"<p>The canned ACL to apply. For details on ACL values, refer to the S3 documentation.</p>",
           "location":"header",
           "locationName":"x-amz-acl",
           "isNtnxSupported":false
@@ -10369,7 +10368,7 @@
         },
         "IfNoneMatch":{
           "shape":"IfNoneMatch",
-          "documentation":"<p>Returns the object only if the ETag does not match the specified value.</p>",
+          "documentation":"<p>Returns the object only if the ETag does not match the specified value.</p> <note> <p>Nutanix Objects validates the If-Match and If-None-Match condition only at the start and end of an object upload. If it matches at both points, the request is accepted. Even if multiple competing requests modify the object state during the upload and cancel effects of each other, the conditional request is still considered valid and accepted.</p> </note>",
           "location":"header",
           "locationName":"If-None-Match"
         },
@@ -10527,7 +10526,8 @@
         "RequestCharged":{
           "shape":"RequestCharged",
           "location":"header",
-          "locationName":"x-amz-request-charged"
+          "locationName":"x-amz-request-charged",
+          "isNtnxSupported":false
         }
       }
     },
@@ -10571,7 +10571,7 @@
         },
         "BypassGovernanceRetention":{
           "shape":"BypassGovernanceRetention",
-          "documentation":"<p>Indicates whether to bypass governance-mode retention. For details, refer to the AWS S3 documentation.</p>",
+          "documentation":"<p>Indicates whether to bypass governance-mode retention. For details, refer to the S3 documentation.</p>",
           "location":"header",
           "locationName":"x-amz-bypass-governance-retention",
           "isNtnxSupported":false
@@ -11416,7 +11416,7 @@
       "members":{
         "Payload":{
           "shape":"SelectObjectContentEventStream",
-          "documentation":"<p>The payload.</p>"
+          "documentation":"<p>Root level tag for response payload.</p>"
         }
       },
       "payload":"Payload"
@@ -11993,7 +11993,7 @@
       "members":{
         "CopySourceVersionId":{
           "shape":"CopySourceVersionId",
-          "documentation":"<p>The version ID of the source object for the copy.</p>",
+          "documentation":"<p>The version ID of the source object that was copied, if versioning is enabled on the source bucket.</p>",
           "location":"header",
           "locationName":"x-amz-copy-source-version-id"
         },
@@ -12184,7 +12184,7 @@
         },
         "ETag":{
           "shape":"ETag",
-          "documentation":"<p>The entity tag (ETag) of the object, which is a hash of the object content.</p>",
+          "documentation":"<p>The entity tag (ETag) of the uploaded part.</p>",
           "location":"header",
           "locationName":"ETag"
         },
@@ -12547,7 +12547,7 @@
         },
         "ETag":{
           "shape":"ETag",
-          "documentation":"<p>The entity tag (ETag) of the object, which is a hash of the object content.</p>",
+          "documentation":"<p>The entity tag (ETag) of the object.</p>",
           "location":"header",
           "locationName":"x-amz-fwd-header-ETag"
         },
@@ -12706,12 +12706,12 @@
           "shape":"BucketName",
           "location":"uri",
           "locationName":"Bucket",
-          "documentation":"<p>The name of the bucket.</p>"
+          "documentation":"<p>The NFS enabled bucket whose NFS configuration you want to create or replace.</p>"
         },
         "NfsConfiguration":{
           "shape":"NfsConfiguration",
           "locationName":"NfsConfiguration",
-          "documentation":"<p>The nfs configuration.</p>"
+          "documentation":"<p>The NFS configuration that you want to apply to the specified bucket.</p>"
         }
       },
       "payload":"NfsConfiguration"
@@ -12734,7 +12734,7 @@
         "NfsConfiguration":{
           "shape":"NfsConfiguration",
           "locationName":"NfsConfiguration",
-          "documentation":"<p>The nfs configuration.</p>"
+          "documentation":"<p>Specifies the NFS configuration of specified NFS enabled bucket.</p>"
         }
       },
       "payload":"NfsConfiguration"
@@ -12744,18 +12744,18 @@
       "members":{
         "Squash":{
           "shape":"Squash",
-          "documentation":"<p>The squash.</p>"
+          "documentation":"<p>Squash option for NFS client access based on which a client's UID and GID is mapped to anonymous UID and GID.</p>"
         },
         "Owner":{"shape":"NfsConfigOwner"},
         "Anonymous":{"shape":"Anonymous"},
         "Permissions":{"shape":"Permissions"},
         "ReadOnly":{
           "shape":"ReadOnly",
-          "documentation":"<p>The read only.</p>"
+          "documentation":"<p>Whether the bucket is read only for NFS access.</p>"
         },
         "CoolOffThresholdSecs":{
           "shape":"CoolOffThresholdSecs",
-          "documentation":"<p>The cool-off threshold in seconds before data becomes eligible for tiering.</p>"
+          "documentation":"<p>Threshold in seconds used to determine whether to allow modification of a WORM protected file.</p>"
         }
       }
     },
@@ -12764,11 +12764,11 @@
       "members":{
         "UID":{
           "shape":"UID",
-          "documentation":"<p>The POSIX user ID for NFS access. This is a Nutanix Objects-specific parameter.</p>"
+          "documentation":"<p>Owner UID of all the implicit directories and objects created through S3 protocol.</p>"
         },
         "GID":{
           "shape":"GID",
-          "documentation":"<p>The POSIX group ID for NFS access. This is a Nutanix Objects-specific parameter.</p>"
+          "documentation":"<p>Owner GID of all the implicit directories and objects created through S3 protocol.</p>"
         }
       }
     },
@@ -12777,11 +12777,11 @@
       "members":{
         "UID":{
           "shape":"UID",
-          "documentation":"<p>The POSIX user ID for NFS access. This is a Nutanix Objects-specific parameter.</p>"
+          "documentation":"<p>Anonymous UID.</p>"
         },
         "GID":{
           "shape":"GID",
-          "documentation":"<p>The POSIX group ID for NFS access. This is a Nutanix Objects-specific parameter.</p>"
+          "documentation":"<p>Anonymous GID.</p>"
         }
       }
     },
@@ -12790,11 +12790,11 @@
       "members":{
         "File":{
           "shape":"FilePermissions",
-          "documentation":"<p>The file information.</p>"
+          "documentation":"<p>This is the file permission for Read, Write and Execute eg.'rwxrwxrwx'.</p>"
         },
         "Directory":{
           "shape":"DirectoryPermissions",
-          "documentation":"<p>Indicates whether the object represents a directory.</p>"
+          "documentation":"<p>This is the directory permission for Read, Write and Execute eg.'rwxrwxrwx'.</p>"
         }
       }
     },
@@ -12804,7 +12804,7 @@
       "members":{
         "Update":{
           "shape":"Update",
-          "documentation":"<p>The update.</p>",
+          "documentation":"<p>Container for the request.</p>",
           "locationName":"Update"
         }
       },
@@ -12815,11 +12815,11 @@
       "members":{
         "UpdatedInventoryConfigs":{
           "shape":"UpdatedInventoryConfigs",
-          "documentation":"<p>The updated inventory configs.</p>"
+          "documentation":"<p>Container element for a successful update. It identifies the inventory configuration key that was successfully updated.</p>"
         },
         "Errors":{
           "shape":"Errors",
-          "documentation":"<p>The list of errors from the operation.</p>",
+          "documentation":"<p>Container for a failed update operation that describes the inventory config id key that Objects attempted to update and the error is encountered.</p>",
           "locationName":"Error"
         }
       }
@@ -12833,20 +12833,20 @@
       "members":{
         "InventoryConfigs":{
           "shape":"InventoryConfigIdentifierList",
-          "documentation":"<p>The list of inventory configurations to set.</p>",
+          "documentation":"<p>The inventory config keys to update.</p>",
           "locationName":"InventoryConfig"
         },
         "Status":{
           "shape":"Status",
-          "documentation":"<p>The status value (Enabled or Disabled).</p>",
+          "documentation":"<p>The status value that we want to update the list of inventory config keys with.</p>",
           "locationName":"Status"
         },
         "Quiet":{
           "shape":"Quiet",
-          "documentation":"<p>Indicates whether the response includes only errors.</p>"
+          "documentation":"<p>Element to enable quiet mode for the request. When you add this element, you must set its value to true.</p>"
         }
       },
-      "documentation":"<p>Contains update information.</p>"
+      "documentation":"<p>Container for the inventory configs to update.</p>"
     },
     "InventoryConfigIdentifier":{
       "type":"structure",
@@ -12857,14 +12857,14 @@
       "members":{
         "Bucket":{
           "shape":"Bucket",
-          "documentation":"<p>The name of the bucket.</p>"
+          "documentation":"<p>Bucket name for the bucket inventory config to be updated.</p>"
         },
         "ConfigId":{
           "shape":"ConfigId",
-          "documentation":"<p>The configuration identifier.</p>"
+          "documentation":"<p>ConfigId for the bucket inventory config to be updated.</p>"
         }
       },
-      "documentation":"<p>A unique identifier for an inventory configuration.</p>"
+      "documentation":"<p>Inventory config Identifier is unique value to identify inventory configs.</p>"
     },
     "InventoryConfigIdentifierList":{
       "type":"list",
@@ -12894,14 +12894,14 @@
       "members":{
         "Bucket":{
           "shape":"Bucket",
-          "documentation":"<p>The name of the bucket.</p>"
+          "documentation":"<p>Bucket name for the bucket inventory config to be updated.</p>"
         },
         "ConfigId":{
           "shape":"ConfigId",
-          "documentation":"<p>The configuration identifier.</p>"
+          "documentation":"<p>ConfigId for the bucket inventory config to be updated.</p>"
         }
       },
-      "documentation":"<p>Contains updated inventory config identifier information.</p>"
+      "documentation":"<p>Inventory config Identifier is unique value to identify inventory configs.</p>"
     },
     "GetBucketInventoryStatusRequest":{
       "type":"structure",
@@ -12909,7 +12909,7 @@
       "members":{
         "Lookup":{
           "shape":"Lookup",
-          "documentation":"<p>The lookup.</p>",
+          "documentation":"<p>Container for the inventory configs to lookup.</p>",
           "locationName":"Lookup"
         }
       },
@@ -12920,11 +12920,11 @@
       "members":{
         "LookedupInventoryConfigs":{
           "shape":"ReadInventoryConfigs",
-          "documentation":"<p>The lookedup inventory configs.</p>"
+          "documentation":"<p>Container element for a successful update. It identifies the inventory configuration key that was successfully read.</p>"
         },
         "Errors":{
           "shape":"Errors",
-          "documentation":"<p>The list of errors from the operation.</p>",
+          "documentation":"<p>Container for a failed lookup operation that describes the inventory config id key that Objects attempted to update and the error is encountered..</p>",
           "locationName":"Error"
         }
       }
@@ -12935,11 +12935,11 @@
       "members":{
         "InventoryConfigs":{
           "shape":"InventoryConfigIdentifierList",
-          "documentation":"<p>The list of inventory configurations to set.</p>",
+          "documentation":"<p>The inventory config keys to lookup.</</p>",
           "locationName":"InventoryConfig"
         }
       },
-      "documentation":"<p>Contains inventory configuration identifiers to look up.</p>"
+      "documentation":"<p>Container for the inventory configs to lookup.</p>"
     },
     "ReadInventoryConfigs":{
       "type":"list",
@@ -12957,23 +12957,23 @@
       "members":{
         "Bucket":{
           "shape":"Bucket",
-          "documentation":"<p>The name of the bucket.</p>"
+          "documentation":"<p>Bucket name for the bucket inventory config to be looked up.</p>"
         },
         "ConfigId":{
           "shape":"ConfigId",
-          "documentation":"<p>The configuration identifier.</p>"
+          "documentation":"<p>ConfigId for the bucket inventory config to be looked up.</p>"
         },
         "Status":{
           "shape":"Status",
-          "documentation":"<p>The status value (Enabled or Disabled).</p>",
+          "documentation":"<p>The status value of the inventory config key.</p>",
           "locationName":"Status"
         },
         "VersionId":{
           "shape":"VersionId",
-          "documentation":"<p>The version identifier of the object.</p>"
+          "documentation":"<p>The version id value of the inventory config key.</p>"
         }
       },
-      "documentation":"<p>A unique identifier for reading inventory configuration.</p>"
+      "documentation":"<p>Inventory config Identifier is unique value to identify inventory configs.</p>"
     },
     "ListFederationMembersRequest":{
       "type":"structure",
@@ -12982,7 +12982,7 @@
           "shape":"FederationName",
           "location":"header",
           "locationName":"x-ntnx-objects-namespace-name",
-          "documentation":"<p>The name of the federation. This is a Nutanix Objects-specific parameter.</p>"
+          "documentation":"<p>Specifies the name of the federation namespace.</p>"
         }
       }
     },
@@ -12991,12 +12991,12 @@
       "members":{
         "FederationMembers":{
           "shape":"FederationMembersList",
-          "documentation":"<p>The list of federation members. This is a Nutanix Objects-specific parameter.</p>",
+          "documentation":"<p>The list of federation members.</p>",
           "locationName":"FederationMember"
         },
         "FederationReleaseVersion":{
           "shape":"String",
-          "documentation":"<p>The release version of the federation member. This is a Nutanix Objects-specific parameter.</p>"
+          "documentation":"<p>Minimum Federation release version.</p>"
         }
       }
     },
@@ -13010,19 +13010,19 @@
       "members":{
         "Name":{
           "shape":"String",
-          "documentation":"<p>The name of the bucket.</p>"
+          "documentation":"<p>Federation member name.</p>"
         },
         "Fqdn":{
           "shape":"String",
-          "documentation":"<p>The fully qualified domain name.</p>"
+          "documentation":"<p>Federation member fqdn.</p>"
         },
         "Type":{
           "shape":"FederationMemberType",
-          "documentation":"<p>The type identifier.</p>"
+          "documentation":"<p>Federation member type.</p>"
         },
         "Version":{
           "shape":"String",
-          "documentation":"<p>The version.</p>"
+          "documentation":"<p>Federation member version.</p>"
         }
       }
     },
