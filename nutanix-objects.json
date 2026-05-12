@@ -22,10 +22,7 @@
         "requestUri":"/{Bucket}/{Key+}",
         "responseCode":204
       },
-      "input":{
-        "shape":"AbortMultipartUploadRequest",
-        "isNtnxSupported":false
-      },
+      "input":{"shape":"AbortMultipartUploadRequest"},
       "output":{"shape":"AbortMultipartUploadOutput"},
       "errors":[
         {"shape":"NoSuchUpload"}
