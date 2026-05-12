@@ -12932,7 +12932,7 @@
       "members":{
         "InventoryConfigs":{
           "shape":"InventoryConfigIdentifierList",
-          "documentation":"<p>The inventory config keys to lookup.</</p>",
+          "documentation":"<p>The inventory config keys to lookup.</p>",
           "locationName":"InventoryConfig"
         }
       },
